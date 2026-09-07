@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "GAgQc4RdaYs=",
+  "success": true,
+  "projectFilePath": "/home/bryan/express/src/Services/Identity/Identity.Api/Identity.Api.csproj",
+  "expectedPackageFiles": [
+    "/home/bryan/.nuget/packages/microsoft.aspnetcore.openapi/10.0.11/microsoft.aspnetcore.openapi.10.0.11.nupkg.sha512",
+    "/home/bryan/.nuget/packages/microsoft.openapi/2.7.5/microsoft.openapi.2.7.5.nupkg.sha512"
+  ],
+  "logs": []
+}
