@@ -47,7 +47,8 @@ public class AuthController : ControllerBase
 
             return Ok(new
             {
-                mensaje = "Inicio de sesión exitoso"  
+                mensaje = "Inicio de sesión exitoso",
+                nombre = usuario.Nombres  
             });
         }
         catch (UnauthorizedAccessException ex)
