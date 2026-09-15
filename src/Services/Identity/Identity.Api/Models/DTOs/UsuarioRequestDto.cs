@@ -3,7 +3,7 @@ using Identity.Api.Models.Enums;
 
 namespace Identity.Api.Models.DTOs;
 
-public record UsuarioDto
+public record UsuarioRequestDto
 {
     [Required]
     [MaxLength(100)]

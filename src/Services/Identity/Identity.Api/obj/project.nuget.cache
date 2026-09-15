@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "Q2YuO3gG7is=",
+  "dgSpecHash": "lIq5/NS3gYI=",
   "success": true,
   "projectFilePath": "/home/bryan/express/src/Services/Identity/Identity.Api/Identity.Api.csproj",
   "expectedPackageFiles": [
+    "/home/bryan/.nuget/packages/bcrypt.net-next/4.2.0/bcrypt.net-next.4.2.0.nupkg.sha512",
     "/home/bryan/.nuget/packages/humanizer.core/2.14.1/humanizer.core.2.14.1.nupkg.sha512",
     "/home/bryan/.nuget/packages/microsoft.aspnetcore.openapi/10.0.11/microsoft.aspnetcore.openapi.10.0.11.nupkg.sha512",
     "/home/bryan/.nuget/packages/microsoft.build.framework/18.0.2/microsoft.build.framework.18.0.2.nupkg.sha512",
