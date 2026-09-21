@@ -1,26 +1,31 @@
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Identity.Api.Models.Enums;
 
 namespace Identity.Api.Models.Entities;
 
 [Table("emprendedor")]
-public class EmprendedorEntity : UsuarioEntity
+public class EmprendedorEntity 
 {   
+    [Key]
+    [Column("id_usuario")]
+    public Guid IdUsuario { get; set; }
+
     [Column("id_categoria_servicio")]
-    public long IdCategoriaServicio {get; set;}
+    public long IdCategoriaServicio { get; set; }
 
     [Column("numero_servicios")]
-    public int NumeroServicios {get; set;}
+    public int NumeroServicios { get; set; }
 
     [Column("estado_certificacion")]
-    public EStadoCertificadoEnum EstadoCertidicado {get; set;} = EStadoCertificadoEnum.NoVerificado;
+    public EStadoCertificadoEnum EstadoCertidicado { get; set; } = EStadoCertificadoEnum.NoVerificado;
 
     [Column("disponibilidad_activa")]
-    public bool DisponibilidadActiva {get; set;}
+    public bool DisponibilidadActiva { get; set; }
 
     [Column("precio_base_hora", TypeName = "decimal(12,2)")]
-    public decimal? PrecioBaseHora {get; set;}
+    public decimal? PrecioBaseHora { get; set; }
 
     [Column("descripcion_servicio")]
-    public string DescripcionServicio {get; set;} = null!;
+    public string DescripcionServicio { get; set; } = null!;
 }

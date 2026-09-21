@@ -5,7 +5,11 @@ namespace Identity.Api.Interfaces;
 
 public interface IAuthService
 {
-    // Recibe el DTO (lo que llega en el JSON) y orquesta el registro
     Task<UsuarioEntity> RegistrarUsuarioAsync(UsuarioRequestDto dto);
-    Task<UsuarioEntity> LoginUsuarioAsync(LoginDto dto);
+    Task<string> LoginUsuarioAsync(LoginDto dto);
+    Task UpdateRolAsync(UsuarioEntity usuario, CambioRolDto rol_nuevo);
+    Task<UsuarioEntity?> GetByIdAsync(Guid id);
+    Task<IEnumerable<UsuarioEntity>> GetAllAsync();
+    Task<UsuarioEntity> UpdateUsuarioAsync(Guid id, UsuarioUpdateDto dto);
+    Task DeleteUsuarioAsync(Guid id);
 }

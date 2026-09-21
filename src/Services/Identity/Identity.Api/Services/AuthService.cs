@@ -5,15 +5,19 @@ using Identity.Api.Interfaces;
 using System.Security.Authentication;
 
 
+
 namespace Identity.Api.Services;
 
 public class AuthService : IAuthService
 {
     private readonly IAuthRepository _repository;
+    private readonly TokenService _tokenService;
 
-    public AuthService(IAuthRepository repository)
+
+    public AuthService(IAuthRepository repository, TokenService tokenService)
     {
         _repository = repository;
+        _tokenService = tokenService;
     }
 
     public async Task<UsuarioEntity> RegistrarUsuarioAsync(UsuarioRequestDto dto)
@@ -52,7 +56,7 @@ public class AuthService : IAuthService
         return nuevoUsuario;
     }
 
-    public async Task<UsuarioEntity> LoginUsuarioAsync(LoginDto dto)
+    public async Task<string> LoginUsuarioAsync(LoginDto dto)
     {
         var usuarioExistente = await _repository.GetByEmailAsync(dto.Correo);
     
@@ -68,7 +72,51 @@ public class AuthService : IAuthService
             throw new UnauthorizedAccessException("Credenciales inválidas.");
         }
 
-        return usuarioExistente;
+
+        return _tokenService.GenerarToken(usuarioExistente);
     }
 
+    public async Task UpdateRolAsync(UsuarioEntity usuario, CambioRolDto dto)
+    {
+        await _repository.UpdateRolAsync(usuario, dto.NuevoRol);
+    }
+
+    public async Task<UsuarioEntity?> GetByIdAsync(Guid id)
+    {
+        return await _repository.GetByIdAsync(id);
+    }
+
+    public async Task<IEnumerable<UsuarioEntity>> GetAllAsync()
+    {
+        return await _repository.GetAllAsync();
+    }
+
+    public async Task<UsuarioEntity> UpdateUsuarioAsync(Guid id, UsuarioUpdateDto dto)
+    {
+        var usuario = await _repository.GetByIdAsync(id);
+        if (usuario == null)
+        {
+            throw new KeyNotFoundException("Usuario no encontrado.");
+        }
+
+        if (dto.Nombres != null) usuario.Nombres = dto.Nombres;
+        if (dto.Apellidos != null) usuario.Apellidos = dto.Apellidos;
+        if (dto.Telefono != null) usuario.Telefono = dto.Telefono;
+        if (dto.FotoPerfil != null) usuario.FotoPerfil = dto.FotoPerfil;
+        usuario.UpdatedAt = DateTimeOffset.UtcNow;
+
+        await _repository.UpdateAsync(usuario);
+        return usuario;
+    }
+
+    public async Task DeleteUsuarioAsync(Guid id)
+    {
+        var usuario = await _repository.GetByIdAsync(id);
+        if (usuario == null)
+        {
+            throw new KeyNotFoundException("Usuario no encontrado.");
+        }
+
+        await _repository.DeleteAsync(id);
+    }
 }

@@ -1,8 +1,9 @@
+using System.Text.Json.Serialization;
 using Identity.Api.Models.Enums;
 
 namespace Identity.Api.Models.DTOs;
 
-public record ClienteDto : UsuarioDto
+public record ClienteDto
 {   
     public long? IdCarrito { get; init; }
     public int CantidadResenas { get; init; }
@@ -12,19 +13,19 @@ public record ClienteDto : UsuarioDto
     public bool EstadoActivo { get; init; }
 }
 
-public record AdministradorTiendaDto : UsuarioDto
+public record AdministradorTiendaDto
 {
     public bool EstadoActivo { get; init; }
 }
 
-public record IntermediarioDto : UsuarioDto
-{
+public record IntermediarioDto
+{   
+    [JsonPropertyName("casos_resueltos")]
     public int CasosResueltos { get; init; }
-    public string NivelAutorizacion { get; init; } = null!;
-    public bool EstadoActivo { get; init; }
+
 }
 
-public record EmprendedorDto : UsuarioDto
+public record EmprendedorDto
 {   
     public long IdCategoriaServicio { get; init; }
     public int NumeroServicios { get; init; }
@@ -32,16 +33,4 @@ public record EmprendedorDto : UsuarioDto
     public bool DisponibilidadActiva { get; init; }
     public decimal? PrecioBaseHora { get; init; }
     public string DescripcionServicio { get; init; } = null!;
-}
-
-public record DomiciliarioDto : UsuarioDto
-{   
-    public string PlacaVehiculo { get; init; } = null!;
-    public TipoVehiculoEnum TipoVehiculo { get; init; }
-    public decimal CapacidadCarga { get; init; }
-    public string EstadoPanelTareas { get; init; } = null!;
-    public int NumeroEntregas { get; init; }
-    public int NumeroEntregasExitosas { get; init; }
-    public bool EstadoActivo { get; init; }
-    public decimal Valoracion { get; init; }
 }

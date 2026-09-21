@@ -3,7 +3,7 @@ using Identity.Api.Models.Enums;
 
 namespace Identity.Api.Models.DTOs;
 
-public record DireccionRequestDto
+public record DireccionRequestDto 
 {
     [Required]
     [MaxLength(500)]
@@ -24,7 +24,7 @@ public record DireccionRequestDto
     public string Departamento { get; set; } = null!;
 
     [MaxLength(2)]
-    public string Pais { get; set; } = "CO"; // Valor por defecto según tu diseño
+    public string Pais { get; set; } = "CO"; 
 
     [MaxLength(20)]
     public string? CodigoPostal { get; set; }

@@ -5,15 +5,19 @@ using Identity.Api.Models.Enums;
 namespace Identity.Api.Models.Entities;
 
 [Table("domiciliario")]
-public class DomiciliarioEntity : UsuarioEntity
-{   
+public class DomiciliarioEntity
+
+{   [Key]
+    [Column("id_usuario")]
+    public Guid IdUsuario { get; set; } 
+
     [Column("placa_vehiculo")]
     public string PlacaVehiculo {get; set;} = null!;
 
     [Column("tipo_vehiculo")]
     public TipoVehiculoEnum TipoVehiculo {get; set;}
 
-    [Column("capacidad_carga", TypeName = "decimal(8,2)")]
+    [Column("capacidad_carga_kg", TypeName = "decimal(8,2)")]
     public decimal CapacidadCarga {get; set;}
 
     [Column("estado_panel_tareas")]

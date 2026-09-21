@@ -4,8 +4,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Identity.Api.Models.Entities;
 
 [Table("intermediario")]
-public class IntermediarioEntity : UsuarioEntity
-{
+public class IntermediarioEntity 
+{   
+
+    [Key]
+    [Column("id_usuario")]
+    public Guid IdUsuario { get; set; } 
     [Column("casos_resueltos")]
     public int CasosResueltos {get;set;}
 
