@@ -117,22 +117,34 @@ public class AuthController : ControllerBase
     }
 
     [Authorize]
-    [HttpGet("{id:guid}")]
-    public async Task<IActionResult> GetById([FromRoute] Guid id)
+    public async Task<IActionResult> GetById()
     {
-        var usuario = await _iAuthService.GetByIdAsync(id);
+        var idString = User.FindFirstValue(JwtRegisteredClaimNames.Sub);
+        if (string.IsNullOrEmpty(idString) || !Guid.TryParse(idString, out var idUsuario))
+        {
+            return Unauthorized(new { error = "ID de usuario inválido en el token." });
+        }
+
+        var usuario = await _iAuthService.GetByIdAsync(idUsuario);
         if (usuario == null) return NotFound(new { error = "Usuario no encontrado." });
 
         return Ok(usuario);
     }
 
     [Authorize]
-    [HttpPut("{id:guid}")]
-    public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UsuarioUpdateDto dto)
+    [HttpPut("me")]
+    [HttpPut("update")]
+    public async Task<IActionResult> Update([FromBody] UsuarioUpdateDto dto)
     {
+        var idString = User.FindFirstValue(JwtRegisteredClaimNames.Sub);
+        if (string.IsNullOrEmpty(idString) || !Guid.TryParse(idString, out var idUsuario))
+        {
+            return Unauthorized(new { error = "ID de usuario inválido en el token." });
+        }
+
         try
         {
-            var usuarioActualizado = await _iAuthService.UpdateUsuarioAsync(id, dto);
+            var usuarioActualizado = await _iAuthService.UpdateUsuarioAsync(idUsuario, dto);
             return Ok(new { mensaje = "Usuario actualizado con éxito.", usuario = usuarioActualizado });
         }
         catch (KeyNotFoundException ex)
@@ -146,12 +158,20 @@ public class AuthController : ControllerBase
     }
 
     [Authorize]
-    [HttpDelete("{id:guid}")]
-    public async Task<IActionResult> Delete([FromRoute] Guid id)
+    [HttpDelete("me")]
+    [HttpDelete("delete")]
+   
+    public async Task<IActionResult> Delete()
     {
+        var idString = User.FindFirstValue(JwtRegisteredClaimNames.Sub);
+        if (string.IsNullOrEmpty(idString) || !Guid.TryParse(idString, out var idUsuario))
+        {
+            return Unauthorized(new { error = "ID de usuario inválido en el token." });
+        }
+
         try
         {
-            await _iAuthService.DeleteUsuarioAsync(id);
+            await _iAuthService.DeleteUsuarioAsync(idUsuario);
             return Ok(new { mensaje = "Usuario eliminado con éxito." });
         }
         catch (KeyNotFoundException ex)

@@ -24,7 +24,7 @@ public class DireccionController : ControllerBase
         _service = service;
     }
 
-    [Authorize(Roles = "cliente")]
+    [Authorize]
     [HttpPost("guardar")]
     public async Task<IActionResult> GuardarDireccion([FromBody]DireccionRequestDto dto)
     {   
@@ -74,8 +74,19 @@ public class DireccionController : ControllerBase
     [HttpGet("{id:guid}")]
     public async Task<IActionResult> GetDireccionById([FromRoute] Guid id)
     {
+        var idString = User.FindFirstValue(JwtRegisteredClaimNames.Sub);
+        if (string.IsNullOrEmpty(idString) || !Guid.TryParse(idString, out var idUsuario))
+        {
+            return Unauthorized(new { error = "ID de usuario inválido en el token." });
+        }
+
         var direccion = await _service.GetByIdAsync(id);
         if (direccion == null) return NotFound(new { error = "Dirección no encontrada." });
+
+        if (direccion.IdUsuario != idUsuario)
+        {
+            return StatusCode(403, new { error = "No tiene permiso para acceder a esta dirección." });
+        }
 
         return Ok(direccion);
     }

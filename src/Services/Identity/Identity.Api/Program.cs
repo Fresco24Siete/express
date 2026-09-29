@@ -74,10 +74,22 @@ builder.Services.AddScoped<IEmprendedorService, EmprendedorService>();
 builder.Services.AddScoped<IAdministradorTiendaRepository, AdministradorTiendaRepository>();
 builder.Services.AddScoped<IAdministradorTiendaService, AdministradorTiendaService>();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend", policy =>
+    {
+        policy.SetIsOriginAllowed(_ => true)
+              .AllowAnyHeader()
+              .AllowAnyMethod()
+              .AllowCredentials();
+    });
+});
+
 builder.Services.AddControllers();
 
 var app = builder.Build();
 
+app.UseCors("AllowFrontend");
 app.UseAuthentication();  // ← el orden importa
 app.UseAuthorization();
 

@@ -1,0 +1,138 @@
+@Catalogo_HostAddress = http://localhost:5017
+
+### --- CATEGORIAS ---
+
+### Crear Categoria
+POST {{Catalogo_HostAddress}}/api/catalogo/categoria
+Content-Type: application/json
+
+{
+  "nombre": "Electrónica",
+  "descripcion": "Productos electrónicos y gadgets",
+  "activa": true
+}
+
+### Obtener todas las Categorias
+GET {{Catalogo_HostAddress}}/api/catalogo/categoria
+Accept: application/json
+
+### Obtener Categoria por ID
+GET {{Catalogo_HostAddress}}/api/catalogo/categoria/1
+Accept: application/json
+
+### Obtener Categoria por Nombre
+GET {{Catalogo_HostAddress}}/api/catalogo/categoria/nombre/Electrónica
+Accept: application/json
+
+### Actualizar Categoria
+PUT {{Catalogo_HostAddress}}/api/catalogo/categoria/1
+Content-Type: application/json
+
+{
+  "nombre": "Electrónica y Tecnología",
+  "activa": true
+}
+
+### Eliminar Categoria
+DELETE {{Catalogo_HostAddress}}/api/catalogo/categoria/1
+
+
+### --- TIENDAS ---
+
+### Crear Tienda
+POST {{Catalogo_HostAddress}}/api/catalogo/tienda
+Content-Type: application/json
+
+{
+  "id_administrador": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "nombre": "Tech Store Oficial",
+  "nit": "900123456-1",
+  "categoria_principal": "Tecnología",
+  "terminos_aceptados": true,
+  "direccion": {
+    "numero_calle": "Calle 100 # 15-20",
+    "ciudad": "Bogotá",
+    "departamento": "Cundinamarca",
+    "codigo_postal": "110111",
+    "numero_contacto": "3001234567"
+  }
+}
+
+### Obtener todas las Tiendas
+GET {{Catalogo_HostAddress}}/api/catalogo/tienda
+Accept: application/json
+
+### Obtener Tienda por ID
+GET {{Catalogo_HostAddress}}/api/catalogo/tienda/3fa85f64-5717-4562-b3fc-2c963f66afa6
+Accept: application/json
+
+### Obtener Tienda por Nombre
+GET {{Catalogo_HostAddress}}/api/catalogo/tienda/nombre/Tech Store Oficial
+Accept: application/json
+
+### Actualizar Tienda
+PUT {{Catalogo_HostAddress}}/api/catalogo/tienda/3fa85f64-5717-4562-b3fc-2c963f66afa6
+Content-Type: application/json
+
+{
+  "nombre": "Tech Store Renovada",
+  "categoria_principal": "Tecnología y Gadgets"
+}
+
+### Eliminar Tienda
+DELETE {{Catalogo_HostAddress}}/api/catalogo/tienda/3fa85f64-5717-4562-b3fc-2c963f66afa6
+
+
+### --- PRODUCTOS ---
+
+### Crear Producto
+POST {{Catalogo_HostAddress}}/api/catalogo/producto
+Content-Type: application/json
+
+{
+  "id_tienda": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "id_categoria_producto": 1,
+  "nombre": "Auriculares Bluetooth Pro",
+  "sku": "AUR-BLU-001",
+  "descripcion": "Auriculares inalámbricos con cancelación de ruido",
+  "cantidad_disponibles": 50,
+  "precio": 199.99,
+  "descuento_porcentaje": 10,
+  "estado": "Activo"
+}
+
+### Obtener todos los Productos
+GET {{Catalogo_HostAddress}}/api/catalogo/producto
+Accept: application/json
+
+### Obtener Producto por ID
+GET {{Catalogo_HostAddress}}/api/catalogo/producto/3fa85f64-5717-4562-b3fc-2c963f66afa6
+Accept: application/json
+
+### Obtener Producto por Tienda ID
+GET {{Catalogo_HostAddress}}/api/catalogo/producto/tienda/3fa85f64-5717-4562-b3fc-2c963f66afa6
+Accept: application/json
+
+### Obtener Producto por Categoria ID
+GET {{Catalogo_HostAddress}}/api/catalogo/producto/categoria/1
+Accept: application/json
+
+### Obtener Producto por Slug
+GET {{Catalogo_HostAddress}}/api/catalogo/producto/slug/auriculares-bluetooth-pro
+Accept: application/json
+
+### Obtener Producto por SKU
+GET {{Catalogo_HostAddress}}/api/catalogo/producto/sku/AUR-BLU-001
+Accept: application/json
+
+### Actualizar Producto
+PUT {{Catalogo_HostAddress}}/api/catalogo/producto/3fa85f64-5717-4562-b3fc-2c963f66afa6
+Content-Type: application/json
+
+{
+  "precio": 189.99,
+  "cantidad_disponibles": 45
+}
+
+### Eliminar Producto
+DELETE {{Catalogo_HostAddress}}/api/catalogo/producto/3fa85f64-5717-4562-b3fc-2c963f66afa6

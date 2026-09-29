@@ -45,7 +45,7 @@ public class AuthService : IAuthService
             PasswordHash = passwordHashSalt,
             IdUsuario = Guid.NewGuid(),
             Estado = EstadoUsuarioEnum.Activo,
-            RolActual = "Cliente", 
+            RolActual = "cliente", 
             FechaRegistro = DateTimeOffset.UtcNow,
             CreatedAt = DateTimeOffset.UtcNow,
             UpdatedAt = DateTimeOffset.UtcNow
