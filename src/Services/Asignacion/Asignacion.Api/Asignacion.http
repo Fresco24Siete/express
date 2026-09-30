@@ -1,0 +1,74 @@
+@Asignacion_HostAddress = http://localhost:5030
+
+### Obtener todas las asignaciones de envío
+GET {{Asignacion_HostAddress}}/api/asignacion/envio
+Accept: application/json
+
+###
+
+### Crear una asignación de envío
+POST {{Asignacion_HostAddress}}/api/asignacion/envio
+Content-Type: application/json
+
+{
+  "id_orden": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "id_domiciliario": "4fa85f64-5717-4562-b3fc-2c963f66afa7",
+  "estado": "Asignado",
+  "fecha_asignacion": "2026-09-30T14:30:00Z",
+  "fecha_estimada_entrega": "2026-09-30T16:00:00Z",
+  "latitud_actual": 7.119349,
+  "longitud_actual": -73.122742,
+  "distancia_km": 5.40,
+  "tiempo_estimado_min": 35,
+  "numero_intento": 1,
+  "razon_fallo": null,
+  "firma_cliente": null
+}
+
+###
+
+### Obtener asignación por ID
+@idAsignacion = 3fa85f64-5717-4562-b3fc-2c963f66afa6
+GET {{Asignacion_HostAddress}}/api/asignacion/envio/{{idAsignacion}}
+Accept: application/json
+
+###
+
+### Obtener asignaciones por ID de orden
+@idOrden = 3fa85f64-5717-4562-b3fc-2c963f66afa6
+GET {{Asignacion_HostAddress}}/api/asignacion/envio/orden/{{idOrden}}
+Accept: application/json
+
+###
+
+### Obtener asignaciones por ID de domiciliario
+@idDomiciliario = 4fa85f64-5717-4562-b3fc-2c963f66afa7
+GET {{Asignacion_HostAddress}}/api/asignacion/envio/domiciliario/{{idDomiciliario}}
+Accept: application/json
+
+###
+
+### Obtener asignaciones por Estado
+GET {{Asignacion_HostAddress}}/api/asignacion/envio/estado/Asignado
+Accept: application/json
+
+###
+
+### Actualizar asignación de envío
+PUT {{Asignacion_HostAddress}}/api/asignacion/envio/{{idAsignacion}}
+Content-Type: application/json
+
+{
+  "estado": "EnTransito",
+  "latitud_actual": 7.125000,
+  "longitud_actual": -73.128000,
+  "tiempo_estimado_min": 20
+}
+
+###
+
+### Eliminar asignación de envío
+DELETE {{Asignacion_HostAddress}}/api/asignacion/envio/{{idAsignacion}}
+Accept: application/json
+
+###
