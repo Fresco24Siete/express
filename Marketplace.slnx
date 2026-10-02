@@ -14,4 +14,7 @@
   <Folder Name="/src/Services/Reseña/">
     <Project Path="src/Services/Reseña/Resena.Api/Resena.Api.csproj" />
   </Folder>
+  <Folder Name="/src/Services/Ventas/">
+    <Project Path="src/Services/Ventas/Ventas.Api/Ventas.Api.csproj" />
+  </Folder>
 </Solution>

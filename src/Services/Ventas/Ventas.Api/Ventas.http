@@ -1,0 +1,349 @@
+@Ventas_HostAddress = http://localhost:5080
+
+### ==========================================
+### 1. CARRITO
+### ==========================================
+
+### Obtener todos los carritos
+GET {{Ventas_HostAddress}}/api/ventas/carrito
+Accept: application/json
+
+###
+
+### Crear un carrito
+POST {{Ventas_HostAddress}}/api/ventas/carrito
+Content-Type: application/json
+
+{
+  "precio_total": 0.00,
+  "numero_articulos": 0,
+  "expirado_en": "2026-10-15T23:59:59Z"
+}
+
+###
+
+### Obtener carrito por ID
+@idCarrito = 1
+GET {{Ventas_HostAddress}}/api/ventas/carrito/{{idCarrito}}
+Accept: application/json
+
+###
+
+### Actualizar carrito
+PUT {{Ventas_HostAddress}}/api/ventas/carrito/{{idCarrito}}
+Content-Type: application/json
+
+{
+  "precio_total": 50000.00,
+  "numero_articulos": 2
+}
+
+###
+
+### Eliminar carrito
+DELETE {{Ventas_HostAddress}}/api/ventas/carrito/{{idCarrito}}
+Accept: application/json
+
+### ==========================================
+### 2. ITEM CARRITO
+### ==========================================
+
+### Agregar item al carrito
+POST {{Ventas_HostAddress}}/api/ventas/item-carrito
+Content-Type: application/json
+
+{
+  "id_carrito": 1,
+  "id_producto": "a1b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6d",
+  "cantidad": 2,
+  "precio_unitario": 25000.00
+}
+
+###
+
+### Obtener items de un carrito
+GET {{Ventas_HostAddress}}/api/ventas/item-carrito/carrito/1
+Accept: application/json
+
+###
+
+### Obtener item por ID
+@idItemCarrito = 3fa85f64-5717-4562-b3fc-2c963f66afa6
+GET {{Ventas_HostAddress}}/api/ventas/item-carrito/{{idItemCarrito}}
+Accept: application/json
+
+###
+
+### Actualizar item de carrito
+PUT {{Ventas_HostAddress}}/api/ventas/item-carrito/{{idItemCarrito}}
+Content-Type: application/json
+
+{
+  "cantidad": 3,
+  "precio_unitario": 25000.00
+}
+
+###
+
+### Eliminar item de carrito
+DELETE {{Ventas_HostAddress}}/api/ventas/item-carrito/{{idItemCarrito}}
+Accept: application/json
+
+###
+
+### Vaciar carrito
+DELETE {{Ventas_HostAddress}}/api/ventas/item-carrito/carrito/1
+Accept: application/json
+
+### ==========================================
+### 3. ORDEN
+### ==========================================
+
+### Obtener todas las órdenes
+GET {{Ventas_HostAddress}}/api/ventas/orden
+Accept: application/json
+
+###
+
+### Crear una orden completa con detalles
+POST {{Ventas_HostAddress}}/api/ventas/orden
+Content-Type: application/json
+
+{
+  "id_usuario": "f280a563-7e61-464a-9562-aa4ca89635e9",
+  "id_direccion_envio": "7b7ea227-f472-4663-b873-199fc996d967",
+  "id_carrito": 1,
+  "precio_subtotal": 50000.00,
+  "precio_descuento": 5000.00,
+  "precio_envio": 8000.00,
+  "precio_total": 53000.00,
+  "codigo_descuento": "PROMO2026",
+  "notas_cliente": "Por favor entregar en portería",
+  "detalles": [
+    {
+      "id_producto": "a1b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6d",
+      "cantidad": 2,
+      "precio_unitario": 25000.00,
+      "subtotal": 50000.00
+    }
+  ]
+}
+
+###
+
+### Obtener orden por ID
+@idOrden = 3fa85f64-5717-4562-b3fc-2c963f66afa6
+GET {{Ventas_HostAddress}}/api/ventas/orden/{{idOrden}}
+Accept: application/json
+
+###
+
+### Obtener orden por Número de Orden
+GET {{Ventas_HostAddress}}/api/ventas/orden/numero/ORD-20261001-ABC123
+Accept: application/json
+
+###
+
+### Obtener órdenes por Usuario
+@idUsuario = f280a563-7e61-464a-9562-aa4ca89635e9
+GET {{Ventas_HostAddress}}/api/ventas/orden/usuario/{{idUsuario}}
+Accept: application/json
+
+###
+
+### Obtener órdenes por Estado
+GET {{Ventas_HostAddress}}/api/ventas/orden/estado/pendiente_pago
+Accept: application/json
+
+###
+
+### Actualizar orden
+PUT {{Ventas_HostAddress}}/api/ventas/orden/{{idOrden}}
+Content-Type: application/json
+
+{
+  "estado": "preparando",
+  "notas_cliente": "Actualizado: Dejar con el vigilante"
+}
+
+###
+
+### Cancelar orden
+POST {{Ventas_HostAddress}}/api/ventas/orden/{{idOrden}}/cancelar
+Content-Type: application/json
+
+{
+  "razon_cancelacion": "Cliente solicitó cancelar antes del despacho"
+}
+
+###
+
+### Eliminar orden
+DELETE {{Ventas_HostAddress}}/api/ventas/orden/{{idOrden}}
+Accept: application/json
+
+### ==========================================
+### 4. DETALLE DE ORDEN
+### ==========================================
+
+### Obtener todos los detalles
+GET {{Ventas_HostAddress}}/api/ventas/detalle-orden
+Accept: application/json
+
+###
+
+### Agregar detalle a una orden existente
+POST {{Ventas_HostAddress}}/api/ventas/detalle-orden
+Content-Type: application/json
+
+{
+  "id_orden": "{{idOrden}}",
+  "id_producto": "b2c3d4e5-f6a7-8b9c-0d1e-2f3a4b5c6d7e",
+  "cantidad": 1,
+  "precio_unitario": 15000.00,
+  "subtotal": 15000.00
+}
+
+###
+
+### Obtener detalle por ID
+@idDetalleOrden = 3fa85f64-5717-4562-b3fc-2c963f66afa6
+GET {{Ventas_HostAddress}}/api/ventas/detalle-orden/{{idDetalleOrden}}
+Accept: application/json
+
+###
+
+### Obtener detalles por ID de Orden
+GET {{Ventas_HostAddress}}/api/ventas/detalle-orden/orden/{{idOrden}}
+Accept: application/json
+
+###
+
+### Actualizar detalle
+PUT {{Ventas_HostAddress}}/api/ventas/detalle-orden/{{idDetalleOrden}}
+Content-Type: application/json
+
+{
+  "cantidad": 3,
+  "precio_unitario": 15000.00
+}
+
+###
+
+### Eliminar detalle de orden
+DELETE {{Ventas_HostAddress}}/api/ventas/detalle-orden/{{idDetalleOrden}}
+Accept: application/json
+
+### ==========================================
+### 5. PAGO
+### ==========================================
+
+### Obtener todos los pagos
+GET {{Ventas_HostAddress}}/api/ventas/pago
+Accept: application/json
+
+###
+
+### Registrar pago de una orden
+POST {{Ventas_HostAddress}}/api/ventas/pago
+Content-Type: application/json
+
+{
+  "id_orden": "{{idOrden}}",
+  "monto": 53000.00,
+  "moneda": "COP",
+  "metodo": "tarjeta_credito",
+  "estado": "completado",
+  "referencia_externo": "PAY-REF-998877",
+  "token_encriptado": "tok_visa_4242_abcdef",
+  "ultimos_4_digitos": "4242",
+  "created_by": "{{idUsuario}}"
+}
+
+###
+
+### Obtener pago por ID
+@idPago = 3fa85f64-5717-4562-b3fc-2c963f66afa6
+GET {{Ventas_HostAddress}}/api/ventas/pago/{{idPago}}
+Accept: application/json
+
+###
+
+### Obtener pago por ID de orden
+GET {{Ventas_HostAddress}}/api/ventas/pago/orden/{{idOrden}}
+Accept: application/json
+
+###
+
+### Actualizar pago
+PUT {{Ventas_HostAddress}}/api/ventas/pago/{{idPago}}
+Content-Type: application/json
+
+{
+  "estado": "completado",
+  "referencia_externo": "PAY-REF-CONFIRMED-998877"
+}
+
+###
+
+### Eliminar pago
+DELETE {{Ventas_HostAddress}}/api/ventas/pago/{{idPago}}
+Accept: application/json
+
+### ==========================================
+### 6. DEVOLUCIÓN
+### ==========================================
+
+### Obtener todas las devoluciones
+GET {{Ventas_HostAddress}}/api/ventas/devolucion
+Accept: application/json
+
+###
+
+### Registrar una devolución
+POST {{Ventas_HostAddress}}/api/ventas/devolucion
+Content-Type: application/json
+
+{
+  "id_orden": "{{idOrden}}",
+  "id_detalle_orden": "{{idDetalleOrden}}",
+  "cantidad_devuelta": 1,
+  "razon": "defectuoso",
+  "monto_reembolso": 25000.00
+}
+
+###
+
+### Obtener devolución por ID
+@idDevolucion = 3fa85f64-5717-4562-b3fc-2c963f66afa6
+GET {{Ventas_HostAddress}}/api/ventas/devolucion/{{idDevolucion}}
+Accept: application/json
+
+###
+
+### Obtener devoluciones por Orden
+GET {{Ventas_HostAddress}}/api/ventas/devolucion/orden/{{idOrden}}
+Accept: application/json
+
+###
+
+### Obtener devoluciones por Detalle de Orden
+GET {{Ventas_HostAddress}}/api/ventas/devolucion/detalle/{{idDetalleOrden}}
+Accept: application/json
+
+###
+
+### Actualizar estado de devolución
+PUT {{Ventas_HostAddress}}/api/ventas/devolucion/{{idDevolucion}}
+Content-Type: application/json
+
+{
+  "estado": "aprobada",
+  "monto_reembolso": 25000.00
+}
+
+###
+
+### Eliminar devolución
+DELETE {{Ventas_HostAddress}}/api/ventas/devolucion/{{idDevolucion}}
+Accept: application/json
