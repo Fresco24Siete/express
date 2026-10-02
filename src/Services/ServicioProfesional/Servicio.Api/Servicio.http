@@ -1,0 +1,170 @@
+@Servicio_HostAddress = http://localhost:5090
+
+### ==========================================
+### 1. CATEGORIAS DE SERVICIO
+### ==========================================
+
+### Obtener todas las categorías de servicio
+GET {{Servicio_HostAddress}}/api/servicio-profesional/categoria
+Accept: application/json
+
+###
+
+### Obtener solo las categorías activas
+GET {{Servicio_HostAddress}}/api/servicio-profesional/categoria?soloActivas=true
+Accept: application/json
+
+###
+
+### Crear una categoría de servicio
+POST {{Servicio_HostAddress}}/api/servicio-profesional/categoria
+Content-Type: application/json
+
+{
+  "nombre": "Plomería y Fontanería",
+  "descripcion": "Reparación e instalación de tuberías, grifos y sanitarios a domicilio.",
+  "duracion_promedio_horas": 2,
+  "requiere_ubicacion": true,
+  "precio_base_sugerido": 60000.00,
+  "activa": true
+}
+
+###
+
+### Obtener categoría por ID
+@idCategoria = 1
+GET {{Servicio_HostAddress}}/api/servicio-profesional/categoria/{{idCategoria}}
+Accept: application/json
+
+###
+
+### Actualizar categoría de servicio
+PUT {{Servicio_HostAddress}}/api/servicio-profesional/categoria/{{idCategoria}}
+Content-Type: application/json
+
+{
+  "nombre": "Plomería y Fontanería Residencial",
+  "duracion_promedio_horas": 3,
+  "precio_base_sugerido": 75000.00,
+  "activa": true
+}
+
+###
+
+### Eliminar categoría de servicio
+DELETE {{Servicio_HostAddress}}/api/servicio-profesional/categoria/{{idCategoria}}
+Accept: application/json
+
+### ==========================================
+### 2. SERVICIOS PROFESIONALES
+### ==========================================
+
+### Obtener todos los servicios
+GET {{Servicio_HostAddress}}/api/servicio-profesional/servicio
+Accept: application/json
+
+###
+
+### Crear un nuevo servicio profesional
+POST {{Servicio_HostAddress}}/api/servicio-profesional/servicio
+Content-Type: application/json
+
+{
+  "id_cliente": "11111111-1111-1111-1111-111111111111",
+  "id_emprendedor": "22222222-2222-2222-2222-222222222222",
+  "id_categoria_servicio": 1,
+  "descripcion_solicitud": "Arreglo urgente de fuga de agua bajo el lavamanos en baño principal.",
+  "ubicacion_lat": 4.609710,
+  "ubicacion_lon": -74.081750,
+  "fecha_estimada_inicio": "2026-10-05T10:00:00Z",
+  "duracion_estimada_horas": 2,
+  "costo_base": 60000.00,
+  "costo_adicional": 15000.00
+}
+
+###
+
+### Obtener servicio por ID
+@idServicio = 00000000-0000-0000-0000-000000000000
+GET {{Servicio_HostAddress}}/api/servicio-profesional/servicio/{{idServicio}}
+Accept: application/json
+
+###
+
+### Obtener servicios por ID de cliente
+@idCliente = 11111111-1111-1111-1111-111111111111
+GET {{Servicio_HostAddress}}/api/servicio-profesional/servicio/cliente/{{idCliente}}
+Accept: application/json
+
+###
+
+### Obtener servicios por ID de emprendedor
+@idEmprendedor = 22222222-2222-2222-2222-222222222222
+GET {{Servicio_HostAddress}}/api/servicio-profesional/servicio/emprendedor/{{idEmprendedor}}
+Accept: application/json
+
+###
+
+### Filtrar servicios por estado
+GET {{Servicio_HostAddress}}/api/servicio-profesional/servicio?estado=solicitado
+Accept: application/json
+
+###
+
+### Actualizar servicio
+PUT {{Servicio_HostAddress}}/api/servicio-profesional/servicio/{{idServicio}}
+Content-Type: application/json
+
+{
+  "descripcion_solicitud": "Arreglo urgente de fuga e instalación de llave de paso nueva.",
+  "costo_adicional": 20000.00
+}
+
+###
+
+### Cambiar estado a 'aceptado'
+PATCH {{Servicio_HostAddress}}/api/servicio-profesional/servicio/{{idServicio}}/estado
+Content-Type: application/json
+
+{
+  "estado": "aceptado"
+}
+
+###
+
+### Cambiar estado a 'en_proceso'
+PATCH {{Servicio_HostAddress}}/api/servicio-profesional/servicio/{{idServicio}}/estado
+Content-Type: application/json
+
+{
+  "estado": "en_proceso",
+  "fecha_real_inicio": "2026-10-05T10:15:00Z"
+}
+
+###
+
+### Cambiar estado a 'completado'
+PATCH {{Servicio_HostAddress}}/api/servicio-profesional/servicio/{{idServicio}}/estado
+Content-Type: application/json
+
+{
+  "estado": "completado",
+  "duracion_real_horas": 2.50
+}
+
+###
+
+### Cambiar estado a 'cancelado' con razón
+PATCH {{Servicio_HostAddress}}/api/servicio-profesional/servicio/{{idServicio}}/estado
+Content-Type: application/json
+
+{
+  "estado": "cancelado",
+  "razon_cancelacion": "Cliente reprogramó para el siguiente mes."
+}
+
+###
+
+### Eliminar servicio
+DELETE {{Servicio_HostAddress}}/api/servicio-profesional/servicio/{{idServicio}}
+Accept: application/json
